@@ -33,9 +33,7 @@ function App({ data, state }) {
       <button onClick={data}>Increment Parent State</button>
     </div> */}
 
-      {/* <p>{state}sd</p>
-      <button onClick={data}>da</button>
-     <Child2/> */}
+     
       <Trail />
     </div>
   );

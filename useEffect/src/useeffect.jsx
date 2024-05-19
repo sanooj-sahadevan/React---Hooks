@@ -3,31 +3,45 @@
 import React, { useEffect, useState } from "react";
 
 function ABC() {
-  const [name, SetName] = useState(0);
+  const [name, setName] = useState(0);
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    if (name === 5) {
+      fetch('https://jsonplaceholder.typicode.com/users')
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          setUsers(data);
+        })
+        .catch(error => console.error('Error fetching data:', error));
+    }
+
+    if (name === 7) {
+      setUsers([]);
+    }
+
+  }, [name]
+
  
+
+
+); // Dependency array should include name to watch for changes
 
   useEffect(() => {
     document.title = `click ${name}`;
-  });
-
+  }, [name]); // Add `name` as a dependency to update title only when `name` changes
 
   const plus = () => {
-    SetName((e)=>e+1);
- 
+    setName((e) => e + 1);
   };
 
-  
-
- 
   const minus = () => {
-    SetName((e)=>e-1);
- 
+    setName((e) => e - 1);
   };
 
   return (
-    <div >
-     
-
+    <div>
       <button className="btn" onClick={plus}>
         ouch++
       </button>
@@ -35,10 +49,16 @@ function ABC() {
       <button className="btn" onClick={minus}>
         ouch--
       </button>
-     
+      <div>
+        <h3>Users List</h3>
+        <ul>
+          {users.map(user => (
+            <li key={user.id}>{user.name}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
-
 
 export default ABC;
